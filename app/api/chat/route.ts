@@ -1,4 +1,3 @@
-// app/api/chat/route.ts
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
@@ -25,7 +24,7 @@ const encoder = new TextEncoder();
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 async function fakeStreamController(text: string, controller: ReadableStreamDefaultController) {
-  const chunks = (text || `FAKE[${modelName()}] → dis-moi quelque chose 🙂`)
+  const chunks = (text || `FAKE[${modelName()}] → dis-moi quelque chose `)
     .match(/.{1,10}/g) || []; // petits morceaux (~10 chars)
 
   // Envoie “data: …\n\n” (format proche SSE lisible côté client)
@@ -110,7 +109,7 @@ export async function POST(req: Request) {
       messages: msgs,
       temperature: 0.2,
       max_tokens: 256,
-      // IMPORTANT : on demande un flux au fournisseur
+      // on demande un flux au fournisseur
       stream: true
     };
 
